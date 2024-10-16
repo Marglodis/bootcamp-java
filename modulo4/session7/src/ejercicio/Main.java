@@ -1,3 +1,5 @@
+package ejercicio;
+
 import ejercicio.modelo.Auto;
 import ejercicio.modelo.Bicicleta;
 

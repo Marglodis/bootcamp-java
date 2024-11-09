@@ -1,0 +1,4 @@
+Total cancelado: 1000.0
+Detalle de la compra:
+Producto{nombre='Cuaderno Doble Espiral', precio=1000.0, codigo='aa1'}
+¡Gracias por su compra!

@@ -17,7 +17,7 @@ public class ServicioGeolocalizacion {
      * La  dirección https://freegeoip.app/json no se encuentra disponible. De ahí que utilizara la de prueba de la página https://app.ipbase.com
      */
 
-    private static final String API_URL = "https://api.ipbase.com/v2/info?apikey=ipb_live_gVw19isQ5PpaQLB3ZLe26w01gY2T545nwkcEXiDh&ip=1.1.1.1";
+    private static final String API_URL = "https://api.ipbase.com/v2/";
     private final ApiClient apiClient;
     private final ObjectMapper objectMapper;
 

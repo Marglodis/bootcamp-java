@@ -2,24 +2,25 @@ package org.consumirApi.servicio;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.consumirApi.modelo.Geolocalizacion;
 import org.consumirApi.util.ApiClient;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
+
+
 
 public class ServicioGeolocalizacion {
 
     /**
      * La  dirección https://freegeoip.app/json no se encuentra disponible. De ahí que utilizara la de prueba de la página https://app.ipbase.com
      */
-
-    private static final String API_URL = "https://api.ipbase.com/v2/";
+// Cambiamos la URL para usar la API Key obtenida de las variables de entorno.
+    private static final String API_URL_TEMPLATE = "https://api.ipbase.com/v2/info?apikey=%s";
     private final ApiClient apiClient;
     private final ObjectMapper objectMapper;
+
+    //cargar el archivo .env
 
     public ServicioGeolocalizacion() {
         this.apiClient = new ApiClient() ;
@@ -28,8 +29,16 @@ public class ServicioGeolocalizacion {
 
     public Geolocalizacion obtenerDatosGeograficos(){
         try{
+            // Obtener la clave API desde la variable de entorno
+            Dotenv dotenv = Dotenv.load();
+            String apiKey = dotenv.get("IPBASE_API_KEY");
+            if (apiKey == null || apiKey.isEmpty()) {
+                throw new Exception("La clave API no está configurada en las variables de entorno.");
+            }
 
-            HttpResponse<String> response = apiClient.enviarPeticion(API_URL);
+            // Formatear la URL con la API key
+            String apiUrl = String.format(API_URL_TEMPLATE, apiKey);
+            HttpResponse<String> response = apiClient.enviarPeticion(apiUrl);
           if (response.statusCode() == 200){
 
               //Se convierte la respuesta JSON en un objeto Geolocalización
